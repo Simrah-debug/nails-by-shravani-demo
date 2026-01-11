@@ -44,7 +44,7 @@ nav a{
 /* HERO */
 .hero{
   background:linear-gradient(135deg,var(--secondary),#fff);
-  padding:110px 20px;
+  padding:120px 20px;
   text-align:center;
 }
 
@@ -67,6 +67,7 @@ nav a{
   color:white;
   border-radius:40px;
   font-size:15px;
+  text-decoration:none;
 }
 
 /* SECTIONS */
@@ -87,13 +88,18 @@ h2{
 .about{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:50px;
+  gap:60px;
   align-items:center;
 }
 
-.about img{
-  width:100%;
-  border-radius:30px;
+.artist-photo{
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+  margin:auto;
+  box-shadow:0 20px 40px rgba(0,0,0,0.15);
 }
 
 .about p{
@@ -130,26 +136,6 @@ h2{
 }
 
 /* GALLERY */
-.filters{
-  text-align:center;
-  margin-bottom:40px;
-}
-
-.filters button{
-  border:none;
-  padding:10px 24px;
-  border-radius:30px;
-  margin:6px;
-  background:#fff;
-  border:1px solid var(--primary);
-  cursor:pointer;
-}
-
-.filters button:hover{
-  background:var(--primary);
-  color:#fff;
-}
-
 .gallery{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
@@ -158,6 +144,8 @@ h2{
 
 .gallery img{
   width:100%;
+  height:320px;
+  object-fit:cover;
   border-radius:25px;
   box-shadow:0 15px 35px rgba(0,0,0,0.1);
 }
@@ -178,6 +166,7 @@ input,select,textarea{
   margin:12px 0;
   border-radius:14px;
   border:1px solid #ddd;
+  font-family:'Poppins',sans-serif;
 }
 
 button{
@@ -189,6 +178,7 @@ button{
   color:white;
   font-size:15px;
   margin-top:15px;
+  cursor:pointer;
 }
 
 #success{
@@ -196,11 +186,12 @@ button{
   text-align:center;
   margin-top:20px;
   color:var(--primary);
+  font-weight:500;
 }
 
 /* RESPONSIVE */
 @media(max-width:768px){
-  .about{grid-template-columns:1fr;}
+  .about{grid-template-columns:1fr;text-align:center;}
   .hero h1{font-size:40px;}
 }
 </style>
@@ -227,7 +218,7 @@ button{
 <section>
   <h2>Meet the Artist</h2>
   <div class="about">
-    <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f">
+    <img class="artist-photo" src="https://images.unsplash.com/photo-1594824476967-48c8b964273f" alt="Shravani Nail Artist">
     <p>
       Hi, I’m Shravani — a certified nail artist specializing in gel extensions,
       overlays, and custom nail designs. My focus is creating long-lasting,
@@ -267,8 +258,8 @@ button{
       <input name="phone" placeholder="Phone Number" required>
       <input type="date" name="date" required>
       <input type="time" name="time" required>
-      <select name="service">
-        <option>Select Service</option>
+      <select name="service" required>
+        <option value="">Select Service</option>
         <option>Gel Nails</option>
         <option>Extensions</option>
         <option>Overlays</option>
@@ -284,7 +275,10 @@ button{
 document.querySelector("form").addEventListener("submit",function(e){
   e.preventDefault();
   fetch("/",{method:"POST",body:new FormData(this)})
-  .then(()=>{document.getElementById("success").style.display="block";this.reset();});
+  .then(()=>{
+    document.getElementById("success").style.display="block";
+    this.reset();
+  });
 });
 </script>
 
